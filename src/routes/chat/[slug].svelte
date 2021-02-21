@@ -12,7 +12,7 @@
   import ChatName from '../../components/ChatName.svelte'
   import InputMsg from '../../components/InputMsg.svelte'
   import ChatBubble from '../../components/ChatBubble.svelte'
-//  export let chatName;
+  //  export let chatName;
   let messages = [
     {
       msg: 'hi',
@@ -31,29 +31,24 @@
   }
   function send(data){
     messages = [...messages, data];
-    let main = document.querySelector('#main');
-    main.scrollTop = main.scrollHeight;
+    window.scrollTo(0, document.documentElement.scrollHeight);
   }
 </script>
 
 <style>
-  div{
-    height: 128vw;
+  #main{
     overflow-y: scroll;
   }
-    @media only screen and (max-height: 1080){
-      div{
-        height: 40vw;
-        overflow-y: scroll;
-      }
-    }
 </style>
 
 <ChatName name='Chat'/>
-<div class="mt-10" id="main">
+<div class="mt-10 mb-24 py-8" id="main">
   {#each messages as message}
     <ChatBubble msg={message.msg} user={message.user} isSelf={message.isSelf}/>
   {/each}
 </div>
-<InputMsg on:send={sendMessage}/>
+  <span class="mb-80" id="bottom">&nbsp;</span>
+<div>
+  <InputMsg on:send={sendMessage}/>
+</div>
 
