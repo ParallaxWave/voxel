@@ -12,6 +12,12 @@
   import ChatName from '../../components/ChatName.svelte'
   import InputMsg from '../../components/InputMsg.svelte'
   import ChatBubble from '../../components/ChatBubble.svelte'
+  import * as io from 'socket.io-client';
+  const socket = io();
+  socket.on('receiveMsg', _ => {
+    _.isSelf = 'false';
+    send(_);
+  })
   //  export let chatName;
   let messages = [
     {
@@ -28,6 +34,7 @@
   function sendMessage(event){
     let data = event.detail;
     send(data);
+    socket.emit('sendMsg', data);
   }
   function send(data){
     messages = [...messages, data];
